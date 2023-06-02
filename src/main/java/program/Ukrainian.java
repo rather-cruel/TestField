@@ -40,8 +40,8 @@ public class Ukrainian {
         alphabet.put("нє", "ňe");
         alphabet.put("о", "o");
         alphabet.put("п", "p");
-        // alphabet.put("при", "přy");
-        // alphabet.put("пре", "pře");
+        alphabet.put("при", "přy");
+        alphabet.put("пре", "pře");
         alphabet.put("р", "r");
         alphabet.put("рь", "ř");
         alphabet.put("с", "s");
@@ -49,7 +49,6 @@ public class Ukrainian {
         alphabet.put("ся", "sia");
         alphabet.put("сє", "sie");
         alphabet.put("сю", "siu");
-        // alphabet.put("сьо", "sío");
 
         alphabet.put("т", "t");
         alphabet.put("ть", "ť");
@@ -64,7 +63,6 @@ public class Ukrainian {
         alphabet.put("ця", "cia");
         alphabet.put("цє", "cie");
         alphabet.put("цю", "ciu");
-        // alphabet.put("цьо", "cío");
 
         alphabet.put("ч", "č");
         alphabet.put("ш", "š");
@@ -77,9 +75,10 @@ public class Ukrainian {
     }
 
     public static String convert(String message, HashMap<String, String> alphabet) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (int index = 0; index < message.length(); index++) {
             char nextLetter = 0;
+            char afterNextLetter = 0;
             char currentLetter = message.charAt(index);
             boolean isCurrentUpper = Character.isUpperCase(currentLetter);
             String lowered = String.valueOf(Character.toLowerCase(currentLetter));
@@ -87,23 +86,32 @@ public class Ukrainian {
 
             try {
                 nextLetter = message.charAt(index + 1);
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
+            try {
+                afterNextLetter = message.charAt(index + 2);
+            } catch (Exception ignored) {}
 
             String twoCurrentLetters = lowered + nextLetter;
+            String threeCurrentLetters = lowered + nextLetter + afterNextLetter;
 
-            if (alphabet.containsKey(twoCurrentLetters)) {
+            // *1!
+            if (alphabet.containsKey(threeCurrentLetters)) {
+                try {
+                    latinLetter = alphabet.get(threeCurrentLetters);
+                    index += 2;
+                } catch (Exception ignored) {}
+            } else if (alphabet.containsKey(twoCurrentLetters)) {
                 try {
                     latinLetter = alphabet.get(twoCurrentLetters);
                     index++;
-                } catch (Exception e) {}
+                } catch (Exception ignored) {}
             } else {
                 if (alphabet.containsKey(lowered)) {
                     latinLetter = alphabet.get(lowered);
                 } else latinLetter += currentLetter;
             }
-
-            output += latinLetter;
+            output.append(latinLetter);
         }
-        return output;
+        return output.toString();
     }
 }
