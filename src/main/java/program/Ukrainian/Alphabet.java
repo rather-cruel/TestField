@@ -1,9 +1,11 @@
-package program;
+package program.Ukrainian;
+
+import program.TestTheOutput;
 
 import java.util.HashMap;
 
 public class Alphabet extends Ukrainian {
-    public Alphabet(String userInput) {
+    public Alphabet(String userInput, String expectation) {
         // Key, Value;
         HashMap<String, String> alphabet = new HashMap<String, String>();
 
@@ -72,6 +74,9 @@ public class Alphabet extends Ukrainian {
         alphabet.put("ю", "ju");
         alphabet.put("я", "ja");
 
-        System.out.println(convert(userInput, alphabet));
+        alphabet.put("ѣ", "ě");
+        alphabet.put("ѧ", "jä");
+
+        TestTheOutput.checkTransliteration(convert(userInput, alphabet), expectation);
     }
 }

@@ -1,4 +1,4 @@
-package program;
+package program.Ukrainian;
 
 import java.util.HashMap;
 
@@ -29,10 +29,7 @@ public class Ukrainian {
                     afterNextLetter = Character.toLowerCase(afterNextLetter);
                 } catch (Exception ignored) {}
 
-                // isCurrentUpper + isNextLetterUpper;
                 String twoCurrentLetters = lowered + nextLetter;
-
-                // isCurrentUpper + isNextUpper + isAfterNextUpper;
                 String threeCurrentLetters = lowered + nextLetter + afterNextLetter;
 
                 if (alphabet.containsKey(threeCurrentLetters)) {
@@ -47,7 +44,7 @@ public class Ukrainian {
                     } catch (Exception ignored) {}
                 } else latinLetter = alphabet.get(lowered);
                 latinLetter = caseConvert(
-                        isCurrentUpper, isNextUpper, isAfterNextUpper, latinLetter, lowered
+                        isCurrentUpper, isNextUpper, isAfterNextUpper, latinLetter, lowered, afterNextLetter
                 );
                 output.append(latinLetter);
             } else output.append(currentLetter);
@@ -57,18 +54,18 @@ public class Ukrainian {
 
     public static String caseConvert(
             boolean isCurrentUpper, boolean isNextUpper, boolean isAfterNextUpper,
-            String latinLetter, String lowered
+            String latinLetter, String lowered, char afterNextLetter
     ) {
         HashMap<String, Boolean> vowels = new HashMap<String, Boolean>();
         vowels.put("я", true);
         vowels.put("є", true);
         vowels.put("ю", true);
         vowels.put("ї", true);
-        vowels.put("ё", true);
 
         String firstCharacter = "";
         String secondCharacter = "";
         String thirdCharacter = "";
+
         try {
             firstCharacter = String.valueOf(latinLetter.charAt(0));
             secondCharacter = String.valueOf(latinLetter.charAt(1));
@@ -81,25 +78,33 @@ public class Ukrainian {
                 }
             } else {
                 if (latinLetter.length() == 2) {
-                    if (isCurrentUpper && isNextUpper) {
-                        latinLetter = latinLetter.toUpperCase();
-                    } else if (isCurrentUpper && !isNextUpper) {
-                        latinLetter = firstCharacter.toUpperCase() + secondCharacter.toLowerCase();
-                    } else if (!isCurrentUpper && isNextUpper) {
-                        latinLetter = firstCharacter.toLowerCase() + secondCharacter.toUpperCase();
-                    } else latinLetter = latinLetter.toLowerCase();
+                    if (isCurrentUpper) {
+                        if (isNextUpper) {
+                            latinLetter = latinLetter.toUpperCase();
+                        } else {
+                            latinLetter = firstCharacter.toUpperCase() + secondCharacter.toLowerCase();
+                        }
+                    } else {
+                        if (isNextUpper) {
+                            latinLetter = firstCharacter.toLowerCase() + secondCharacter.toUpperCase();
+                        } else latinLetter = latinLetter.toLowerCase();
+                    }
                 } else {
-                    if (isCurrentUpper && isNextUpper && isAfterNextUpper) {
-                        latinLetter = latinLetter.toUpperCase();
-                    } else if (isCurrentUpper && !isNextUpper && isAfterNextUpper) {
-                        latinLetter = firstCharacter.toUpperCase() + secondCharacter.toLowerCase() + thirdCharacter.toUpperCase();
-                    } else if (isCurrentUpper && !isNextUpper && !isAfterNextUpper) {
-                        latinLetter = firstCharacter.toUpperCase() + secondCharacter.toLowerCase() + thirdCharacter.toLowerCase();
-                    } else if (!isCurrentUpper && isNextUpper && isAfterNextUpper) {
-                        latinLetter = firstCharacter.toLowerCase() + secondCharacter.toUpperCase() + thirdCharacter.toUpperCase();
-                    } else if (!isCurrentUpper && isNextUpper && !isAfterNextUpper) {
-                        latinLetter = firstCharacter.toLowerCase() + secondCharacter.toUpperCase() + thirdCharacter.toLowerCase();
-                    } else latinLetter = latinLetter.toLowerCase();
+                    if (isCurrentUpper) {
+                        if (isNextUpper && (isAfterNextUpper || afterNextLetter == ' ')) {
+                            latinLetter = latinLetter.toUpperCase();
+                        } else if (!isNextUpper && isAfterNextUpper) {
+                            latinLetter = firstCharacter.toUpperCase() + secondCharacter.toLowerCase() + thirdCharacter.toUpperCase();
+                        } else if (!isNextUpper) {
+                            latinLetter = firstCharacter.toUpperCase() + secondCharacter.toLowerCase() + thirdCharacter.toLowerCase();
+                        }
+                    } else {
+                        if (isNextUpper && isAfterNextUpper) {
+                            latinLetter = firstCharacter.toLowerCase() + secondCharacter.toUpperCase() + thirdCharacter.toUpperCase();
+                        } else if (isNextUpper) {
+                            latinLetter = firstCharacter.toLowerCase() + secondCharacter.toUpperCase() + thirdCharacter.toLowerCase();
+                        } else latinLetter = latinLetter.toLowerCase();
+                    }
                 }
             }
         } else {
