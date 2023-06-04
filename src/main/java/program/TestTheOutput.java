@@ -5,12 +5,15 @@ public class TestTheOutput {
         String output = "";
         String errorMessage = "";
         boolean isAnError = false;
+        int errorIndex = 0;
+
         try {
             for (int i = 0; i < transliteration.length(); i++) {
                 if (transliteration.charAt(i) != expectation.charAt(i)) {
                     errorMessage = "|| Error: " + transliteration + " || Expected: " + expectation;
                     errorMessage += " || Wrong symbol: " + transliteration.charAt(i) + " || Number: " + i + " ||";
                     isAnError = true;
+                    errorIndex = i;
                     break;
                 }
             }
@@ -26,7 +29,9 @@ public class TestTheOutput {
         }
 
         for (int i = 0; i < errorMessage.length(); i++) {
-            output += "-";
+            if (isAnError && i == errorIndex + 10) {
+                output += "=";
+            } else output += "-";
         }
 
         if (isAnError) {

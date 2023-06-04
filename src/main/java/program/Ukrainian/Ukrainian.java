@@ -2,7 +2,7 @@ package program.Ukrainian;
 
 import java.util.HashMap;
 
-public class Ukrainian {
+public abstract class Ukrainian {
     public static String convert(String message, HashMap<String, String> alphabet) {
         StringBuilder output = new StringBuilder();
         for (int index = 0; index < message.length(); index++) {
@@ -43,6 +43,7 @@ public class Ukrainian {
                         index++;
                     } catch (Exception ignored) {}
                 } else latinLetter = alphabet.get(lowered);
+
                 latinLetter = caseConvert(
                         isCurrentUpper, isNextUpper, isAfterNextUpper, latinLetter, lowered, afterNextLetter
                 );
@@ -71,6 +72,7 @@ public class Ukrainian {
             secondCharacter = String.valueOf(latinLetter.charAt(1));
             thirdCharacter = String.valueOf(latinLetter.charAt(2));
         } catch (Exception ignored) {}
+
         if (!vowels.containsKey(lowered)) {
             if (latinLetter.length() == 1) {
                 if (isCurrentUpper) {
