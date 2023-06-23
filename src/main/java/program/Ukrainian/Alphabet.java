@@ -7,7 +7,8 @@ import java.util.HashMap;
 public class Alphabet extends Ukrainian {
     public Alphabet(String userInput, String expectation) {
         // Key, Value;
-        HashMap<String, String> alphabet = new HashMap<String, String>();
+        HashMap<String, String> alphabet = new HashMap<>();
+        HashMap<String, String> afterCons = new HashMap<>();
 
         alphabet.put("'", "");
         alphabet.put("а", "a");
@@ -43,8 +44,6 @@ public class Alphabet extends Ukrainian {
         alphabet.put("нє", "ňe");
         alphabet.put("о", "o");
         alphabet.put("п", "p");
-        alphabet.put("при", "přy");
-        alphabet.put("пре", "pře");
         alphabet.put("р", "r");
         alphabet.put("с", "s");
 
@@ -69,22 +68,21 @@ public class Alphabet extends Ukrainian {
         alphabet.put("ѧ", "jä");
 
         // Temp solution
-        alphabet.put("ця", "cia");
-        alphabet.put("цє", "cia");
-        alphabet.put("цю", "cia");
+        afterCons.put("я", "ia");
+        afterCons.put("є", "ie");
+        afterCons.put("ю", "iu");
+
         alphabet.put("цьо", "cio");
-
-        alphabet.put("ся", "sia");
-        alphabet.put("сє", "sie");
-        alphabet.put("сю", "siu");
         alphabet.put("сьо", "sio");
+        alphabet.put("вьо", "vio");
 
-        TestTheOutput.checkTransliteration(convert(userInput, alphabet), expectation);
+        TestTheOutput.checkTransliteration(convert(userInput, alphabet, afterCons, true), expectation, 1);
     }
 
     public Alphabet(String userInput, boolean toPrint) {
         // Key, Value;
-        HashMap<String, String> alphabet = new HashMap<String, String>();
+        HashMap<String, String> alphabet = new HashMap<>();
+        HashMap<String, String> afterCons = new HashMap<>();
 
         alphabet.put("'", "");
         alphabet.put("а", "a");
@@ -120,8 +118,6 @@ public class Alphabet extends Ukrainian {
         alphabet.put("нє", "ňe");
         alphabet.put("о", "o");
         alphabet.put("п", "p");
-        alphabet.put("при", "přy");
-        alphabet.put("пре", "pře");
         alphabet.put("р", "r");
         alphabet.put("с", "s");
 
@@ -146,16 +142,17 @@ public class Alphabet extends Ukrainian {
         alphabet.put("ѧ", "jä");
 
         // Temp solution
-        alphabet.put("ця", "cia");
-        alphabet.put("цє", "cia");
-        alphabet.put("цю", "cia");
+        afterCons.put("я", "ia");
+        afterCons.put("є", "ie");
+        afterCons.put("ю", "iu");
+        afterCons.put("ѧ", "iä");
+        // afterCons.put("ьо", "io");
+
+        // REMOVE
         alphabet.put("цьо", "cio");
-
-        alphabet.put("ся", "sia");
-        alphabet.put("сє", "sie");
-        alphabet.put("сю", "siu");
         alphabet.put("сьо", "sio");
+        alphabet.put("вьо", "vio");
 
-        System.out.println(convert(userInput, alphabet));
+        System.out.println(convert(userInput, alphabet, afterCons, true));
     }
 }
