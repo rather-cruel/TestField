@@ -40,10 +40,6 @@ public abstract class Ukrainian {
                 } else latinLetter = alphabet.get(lowered);
 
                 if (changeVowels) {
-                    if (isPreviousCons && afterCons.containsKey(lowered)) {
-                        latinLetter = afterCons.get(lowered);
-                    }
-
                     HashMap<String, Boolean> vowels = new HashMap<>();
                     vowels.put("я", true);
                     vowels.put("а", true);
@@ -57,6 +53,10 @@ public abstract class Ukrainian {
                     vowels.put("'", true);
                     vowels.put("ѧ", true);
                     vowels.put("ѣ", true);
+
+                    if (isPreviousCons && vowels.containsKey(lowered) && latinLetter.length() == 2 && latinLetter.charAt(0) == 'j') {
+                        latinLetter = "i" + latinLetter.charAt(1);
+                    }
 
                     isPreviousCons = !vowels.containsKey(lowered);
                 }

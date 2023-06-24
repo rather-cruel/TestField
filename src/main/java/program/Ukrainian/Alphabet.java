@@ -67,14 +67,8 @@ public class Alphabet extends Ukrainian {
         alphabet.put("ѣ", "ě");
         alphabet.put("ѧ", "jä");
 
-        // Temp solution
-        afterCons.put("я", "ia");
-        afterCons.put("є", "ie");
-        afterCons.put("ю", "iu");
-
-        alphabet.put("цьо", "cio");
-        alphabet.put("сьо", "sio");
-        alphabet.put("вьо", "vio");
+        // Temp solution remove:
+        alphabet.put("ьо", "io");
 
         TestTheOutput.checkTransliteration(convert(userInput, alphabet, afterCons, true), expectation, 1);
     }
@@ -138,20 +132,10 @@ public class Alphabet extends Ukrainian {
         alphabet.put("ю", "ju");
         alphabet.put("я", "ja");
 
+        alphabet.put("ьо", "io");
+
         alphabet.put("ѣ", "ě");
         alphabet.put("ѧ", "jä");
-
-        // Temp solution
-        afterCons.put("я", "ia");
-        afterCons.put("є", "ie");
-        afterCons.put("ю", "iu");
-        afterCons.put("ѧ", "iä");
-        // afterCons.put("ьо", "io");
-
-        // REMOVE
-        alphabet.put("цьо", "cio");
-        alphabet.put("сьо", "sio");
-        alphabet.put("вьо", "vio");
 
         System.out.println(convert(userInput, alphabet, afterCons, true));
     }
